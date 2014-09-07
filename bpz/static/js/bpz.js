@@ -2,22 +2,22 @@ var call_map, bpz, value, _fn, _i, _len;
 
 
 
-//TODO: replace 
+//TODO: replace Location function
 function Location() {
   var options = {enableHighAccuracy: true},
     dfd = new $.Deferred(),
-    inner_pos = {}
+    inner_pos = {},
     moved = function(pos) {
       inner_pos = pos || {};
-      dfd.resolve(this)
+      dfd.resolve(this);
     },
     fail = function(err) {
       if (err) {
         console.warn('ERROR(' + err.code + '): ' + err.message);
       }
-      dfd.reject()
+      dfd.reject();
     };
-    
+
     this.__defineGetter__("lat", function() {
       return inner_pos.coords ? inner_pos.coords.latitude : null;
     });
@@ -33,7 +33,7 @@ function Location() {
 
   this.WatchID = navigator.geolocation.watchPosition(moved, fail, options);
 
-  this.ready = dfd.promise()
+  this.ready = dfd.promise();
 
 }
 
@@ -44,11 +44,11 @@ bpz = {
   'location': new Location(),
   get map() {
     if (!bpz._map){
-      //TODO: Move access token into environment variable 
-      L.mapbox.accessToken ='pk.eyJ1IjoiamR1bmdhbiIsImEiOiJlOTl6MFpNIn0.-3o5vIOCjkfXd-7ibZrb8A'
-      bpz._map=L.mapbox.map('map-canvas', 'jdungan.jbbebonl').setView([36.1587336,-95.9940543],12); 
+      //TODO: Move access token into environment variable
+      L.mapbox.accessToken ='pk.eyJ1IjoiamR1bmdhbiIsImEiOiJlOTl6MFpNIn0.-3o5vIOCjkfXd-7ibZrb8A';
+      bpz._map=L.mapbox.map('map-canvas', 'jdungan.jbbebonl').setView([36.1587336,-95.9940543],12);
     }
-    return bpz._map
+    return bpz._map;
   }
 };
 
@@ -66,7 +66,7 @@ bpz.api.call = function(resource, ajax_params) {
 call_map = [["cases", "/cases"],["hoa", "/hoas"]];
 
 _fn = function(value) {
-  return bpz.api[value[0]] = function(params) {
+  bpz.api[value[0]] = function(params) {
     return bpz.api.call(value[1], params);
   };
 };

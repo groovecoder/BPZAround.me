@@ -42,6 +42,7 @@ clean-test:
 
 lint:
 	flake8 --exclude='.tox' .
+	jshint bpz/static/js
 
 test:
 	./manage.py test
